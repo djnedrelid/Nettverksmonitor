@@ -14,6 +14,7 @@ standard 8888, dersom andre maskiner i nettverket skal få tilgang til trafikkov
 **WebUI**  
 IP:PORT i hvilken som helst nyere nettleser som støtter JavaScript.  
 Grafene sorteres automatisk etter trafikkaktivitet, basert på INN+UT samtidig.  
+Første port (beregnet for WAN) forblir alltid på topp.  
 
 **konfigurasjon.ini**  
 Angi port, mellomlagerstørrelse og porter som skal skannes.  
