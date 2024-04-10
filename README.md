@@ -3,7 +3,7 @@
 ![Example UI_1](eksempelbilde1.png) 
 
 En nettverksmonitor for lokalnettverk for visning av trafikk fra bl.a. switcher og brannmurer.  
-Benytter SNMP v2c (public) via integrert [Net-SNMP](http://www.net-snmp.org/) 5.9.4 bibliotek. 
+Benytter SNMP v2c (public) via integrert [Net-SNMP](http://www.net-snmp.org/) 5.9.4 bibliotek.  
 Ingen avhengigheter, i verste fall kanskje [C++ runtime](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) på helt nye systemer.  
 
 **Bruk:**  
