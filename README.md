@@ -12,7 +12,7 @@ Maskinen eller serveren det blir installert på trenger åpen inngang til angitt
 standard 8888, dersom andre maskiner i nettverket skal få tilgang til trafikkoversikten/WebUI i sin nettleser.  
 
 **WebUI**  
-IP:PORT i hvilken som helst nyere nettleser som støtter JavaScript.
+IP:PORT i hvilken som helst nyere nettleser som støtter JavaScript.  
 Grafene sorteres automatisk etter trafikkaktivitet, basert på INN+UT samtidig.  
 
 **konfigurasjon.ini**  
