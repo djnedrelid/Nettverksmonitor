@@ -1,0 +1,39 @@
+
+	Versjon 5.9.4
+
+	***************************************************************************
+	*
+	* Microsoft Visual Studio - Building your own applications with snmplib
+	*
+	***************************************************************************
+
+	Linking in an snmplib built to use the Multithreaded DLL runtime library to
+	an application configured for the Debug Multithreaded DLL runtime library
+	results in a link error along the lines of 'defaultlib "MSVCRT" conflicts
+	with use of other libs'.   If you receive a similar message, check that the
+	projects settings between library and application match up.
+
+	To successfully build your existing project with Net-SNMP libraries,
+	change the project settings FOR YOUR APPLICATION ONLY as follows:
+
+	   1. In the Link section, Select "Additional Libraries".
+		  Add netsnmp.lib for Release version.
+		  Add netsnmp_d.lib for Debug version.
+
+	   2. Remove all references to these libraries:
+		  libsnmp*.lib msvcrt*.lib libc*.lib oldnames.lib
+
+	   3. In the C++ section, Select "Code Generation".
+		  For Release, select /MD or "MultiThreaded DLL".
+		  For Debug, select /MDd or "Debug MultiThreaded DLL".
+
+	   4. Make sure "Ignore all default libraries" is NOT SET.
+
+	   5. Make sure "_MBCS" is included in your pre-processor defines.
+
+	Note: Some users may have better results compiling other packages that use
+		  the installed header files by removing the "mode_t" definition from
+		  net-snmp-config.h file in the installed directories.
+
+
+	Husk å bytte INSTALL_BASE i config.h fila ettersom hvor include mappa skal være iht. nye prosjekter.
