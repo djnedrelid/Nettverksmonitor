@@ -3,7 +3,8 @@
 ![Example UI_1](eksempelbilde1.png) 
 
 En nettverksmonitor for lokalnettverk for visning av trafikk fra bl.a. switcher og brannmurer.  
-Benytter SNMP v2c (public) via Net-SNMP 5.9.4 biblioteket. I verste fall kanskje siste runtime på helt nye systemer.  
+Benytter SNMP v2c (public) via integrert [Net-SNMP](http://www.net-snmp.org/) 5.9.4 bibliotek. 
+Ingen avhengigheter, i verste fall kanskje [C++ runtime](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170) på helt nye systemer.  
 
 **Bruk:**  
 Man installerer på en Windows maskin som skal fungere som vert, les og sett opp konfigurasjon.ini, start og koble til port i en nettleser.  
