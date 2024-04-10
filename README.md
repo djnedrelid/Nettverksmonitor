@@ -11,7 +11,7 @@ Man installerer på en Windows maskin som skal fungere som vert, les og sett opp
 Maskinen eller serveren det blir installert på trenger åpen inngang til angitt port i konfigurasjonsfilen, 
 standard 8888, dersom andre maskiner i nettverket skal få tilgang til trafikkoversikten/WebUI i sin nettleser.  
 
-**WebUI**
+**WebUI**  
 IP:PORT i hvilken som helst nyere nettleser som støtter JavaScript.
 Grafene sorteres automatisk etter trafikkaktivitet, basert på INN+UT samtidig.  
 
