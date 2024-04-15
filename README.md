@@ -59,9 +59,8 @@ Filen inneholder standardverdier og eksempelporter fra et ekte oppsett som illus
    
    
 **Feilsporing**  
-Under testing etter flere dager har det oppstått c0000409 feil, med feilkode  
-FAST_FAIL_FATAL_APP_EXIT(7). Har gjort korrigeringer med frigjørelse av _strdup(), 
-som jeg håper er riktig korreksjon, men dette kan gjerne være et problem i Net-SNMP.  
-
-Program er under videre testing og vil undergå flere endringer dersom feilen oppstår igjen.  
-Uansett feil, burde det være unngåelig, siden feilen oppstår etter flere dagers OK funksjon.
+Under testing etter flere dager har det oppstått c0000409 feil, med feilkode FAST_FAIL_FATAL_APP_EXIT(7). 
+Har gjort korrigeringer med frigjørelse av _strdup(), som jeg håper er riktig korreksjon, 
+men dette kan gjerne være et problem i Net-SNMP. Program er under videre testing og vil undergå flere 
+endringer dersom feilen oppstår igjen. Uansett feil, burde det finne en løsning, siden feilen oppstår 
+etter flere dagers OK funksjon.
