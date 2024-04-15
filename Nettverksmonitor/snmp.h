@@ -138,6 +138,8 @@ class djSNMP
 			if (!ss) {
 				snmp_sess_perror("snmp_open", &session);
 				GetError("snmp_open");
+				free(session.peername); // _strdup
+				free(session.community); // _strdup
 				exit(1);
 			}
 
@@ -202,6 +204,8 @@ class djSNMP
 
 				// Vis beskjed i tilfelle programmet kjører skjult.
 				GetError("snmp_synch_response");
+				free(session.peername); // _strdup
+				free(session.community); // _strdup
 				if (response)
 					snmp_free_pdu(response);
 				//SOCK_CLEANUP;
@@ -270,6 +274,8 @@ class djSNMP
 			}
 
 			// Rydd opp.
+			free(session.peername); // _strdup
+			free(session.community); // _strdup
 			if (response)
 				snmp_free_pdu(response);
 			snmp_close(ss);
