@@ -58,9 +58,13 @@ Filen inneholder standardverdier og eksempelporter fra et ekte oppsett som illus
 	192.168.1.250:49160:8:Frode's Kontor_reverse
    
    
-**Feilsporing**  
+**Feilsporing (LØST)**  
 Under testing etter flere dager har det oppstått c0000409 feil, med feilkode FAST_FAIL_FATAL_APP_EXIT(7). 
 Har gjort korrigeringer med frigjørelse av _strdup(), som jeg håper er riktig korreksjon, 
 men dette kan gjerne være et problem i Net-SNMP. Program er under videre testing og vil undergå flere 
 endringer dersom feilen oppstår igjen. Uansett feil, burde det finne en løsning, siden feilen oppstår 
 etter flere dagers OK funksjon.
+
+**Oppdatering 22.4.2024**
+Lengre testing antyder at korrigeringen løste problemet og at monitoren nå kjører stabilt. 
+Prosessorbruk nær 0% (1% hvert 5 sekund for oppdateringer) og under 4MB RAM kontinuerlig benyttelse.
