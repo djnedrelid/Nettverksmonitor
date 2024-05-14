@@ -280,7 +280,6 @@ class djSNMP
 				snmp_free_pdu(response);
 			snmp_close(ss);
 		}
-		ConfigLock.unlock();
 
 		//
 		// Regn ut nye datapunkter i trafikkbuffer per enhet.
@@ -334,6 +333,8 @@ class djSNMP
 			if (trafikkenheter.at(a).trafikkbuffer.size() > Konfig.TrafikkBufferAntall)
 				trafikkenheter.at(a).trafikkbuffer.erase(trafikkenheter.at(a).trafikkbuffer.begin());
 		}
+
+		ConfigLock.unlock();
 	}
 
 	//
@@ -355,6 +356,9 @@ class djSNMP
 	// Funksjon for JSON output til web UI.
 	std::string GetTrafikkBufferJSON()
 	{
+		// Forhindre indeks-basert bruk av trafikkenheter vektoren mens den blir oppdatert i OppdaterInnUtData().
+		ConfigLock.lock();
+
 		std::string JSONBuffer = "{\"Samling\":\n\t[\n";
 		for (size_t a=0; a<trafikkenheter.size(); a++) {
 			
@@ -386,6 +390,7 @@ class djSNMP
 			JSONBuffer.pop_back(); // Fjern siste komma.
 			JSONBuffer += "]},\n";
 		}
+		ConfigLock.unlock();
 
 		// Fjern avsluttende komma og legg på avsluttende JSON format.
 		JSONBuffer.pop_back();
