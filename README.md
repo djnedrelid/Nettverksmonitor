@@ -56,5 +56,3 @@ Filen inneholder standardverdier og eksempelporter fra et ekte oppsett som illus
 	192.168.1.250:49158:6:Mottak_reverse
 	192.168.1.250:49159:7:Kasse 1_reverse
 	192.168.1.250:49160:8:Frode's Kontor_reverse
-   
-   
