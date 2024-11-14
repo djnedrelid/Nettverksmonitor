@@ -378,12 +378,12 @@ class djSNMP
 					std::to_string(100.0f - trafikkenheter.at(a).trafikkbuffer.at(b).UT) +",";
 
 				// Tidslinjetekst.
-				if ((trafikkenheter.at(a).trafikkbuffer.at(b).TIDSPUNKT - forrige_tidspunkt) >= 120 || forrige_tidspunkt == 0) {
+				//if ((trafikkenheter.at(a).trafikkbuffer.at(b).TIDSPUNKT - forrige_tidspunkt) >= 120 || forrige_tidspunkt == 0) {
 					JSONBuffer += "\""+ TidslinjeTekst(trafikkenheter.at(a).trafikkbuffer.at(b).TIDSPUNKT) +"\"";
-					forrige_tidspunkt = trafikkenheter.at(a).trafikkbuffer.at(b).TIDSPUNKT;
-				} else {
-					JSONBuffer += "\"\"";
-				}
+				//	forrige_tidspunkt = trafikkenheter.at(a).trafikkbuffer.at(b).TIDSPUNKT;
+				//} else {
+				//	JSONBuffer += "\"\"";
+				//}
 
 				JSONBuffer += "],";
 			}

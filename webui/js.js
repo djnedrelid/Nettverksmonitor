@@ -14,6 +14,7 @@ var GrafJS = [];                  // Hovedregister.
 var TrafikkRegister = [];         // Datapunkt-register fra server.
 var OppdateringsIntervall = 5000; // JSON ms intervall fra server.
 var Xstep = 5;
+var TimeLineCounters = [];        // Tellere for tidspunkt avstand.
 
 // Oppretter grafer, stykkvis.
 function GrafCreate() {
@@ -184,8 +185,15 @@ function GrafEngine() {
 			}
 			first_graph_points = false;
 			
-			// Tidslinjetekst.
-			GrafJS[a][4].fillText(TrafikkRegister[a][b][3], Xcoord+18, 2);
+			// Tidslinjetekst. Sørg for litt mellomrom.
+			// 5000ms intervaller og 1 minutters mellomrom = 
+			// (1*60=60)/5 = 12 ganger det skippes. 
+			if (TimeLineCounters[a] > 0 && TimeLineCounters[a] < 12) {
+				TimeLineCounters[a] += 1;
+			} else {
+				GrafJS[a][4].fillText(TrafikkRegister[a][b][3], Xcoord+18, 2);
+				TimeLineCounters[a] = 1;
+			}
 			
 			// Oppdatering X bevegelse.
 			Xcoord += GrafJS[a][0];
@@ -307,6 +315,9 @@ function HentJSONFraServer() {
 	// Nullstill trafikkregister før oppdatering.
 	TrafikkRegister = [];
 	
+	// Nullstill tidslinjeregister før oppdatering.
+	TimeLineCounters = [];
+	
 	// Tolk JSON og hent grafpunkter.
 	for (let a=0; a<Trafikk.Samling.length; a++) {
 		
@@ -338,6 +349,9 @@ function HentJSONFraServer() {
 		
 		// Registrer ny grafpunktliste for tittel.
 		TrafikkRegister.push(grafpunkter_per_tittel);
+		
+		// Registrer en ny teller for tidslinje for tittel.
+		TimeLineCounters.push(0);
 	}
 }
 

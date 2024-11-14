@@ -21,6 +21,9 @@ Første port (beregnet for WAN) forblir alltid på topp.
 Angi port, mellomlagerstørrelse og porter som skal skannes.  
 Filen inneholder standardverdier og eksempelporter fra et ekte oppsett som illustrert i eksempelbildet ovenfor.
 
+**Endringslogg**  
+14.11.2024 - Innkortet tidsintervall- og visning av tidslinje.  
+
 **Eksempelinnhold:**  
 
 	; Porten som web UI skal lytte på. Denne endringen krever omstart av programmet.
