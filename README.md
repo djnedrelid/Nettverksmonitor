@@ -22,7 +22,7 @@ Angi port, mellomlagerstørrelse og porter som skal skannes.
 Filen inneholder standardverdier og eksempelporter fra et ekte oppsett som illustrert i eksempelbildet ovenfor.
 
 **Endringslogg**  
-14.11.2024 - Innkortet tidsintervall- og visning av tidslinje.  
+14.11.2024 - Forbedret visning av tidslinje; kortere tidsintervall og mye bedre flyt.  
 
 **Eksempelinnhold:**  
 
