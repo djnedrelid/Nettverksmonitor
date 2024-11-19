@@ -26,6 +26,22 @@ BODY {
 	z-index: 1000;
 }
 
+.tl_label {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	opacity: 0;
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px solid #333;
+	padding: 2px;
+	font-family: sans-serif;
+	font-size: 11px;
+	display: block;
+	box-shadow: 2px 2px 2px #999;
+	cursor: crosshair;
+}
+
 .graf {
 	padding: 0px;
 	margin: 0px;

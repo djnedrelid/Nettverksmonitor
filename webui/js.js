@@ -155,13 +155,14 @@ function GrafEngine() {
 		
 		// Set back line thickness for graphs.
 		GrafJS[a][2].lineWidth = 2;
-		
+	
 		// Tegn grafpunkter per tittel fra oppdatert buffer.
-		var first_graph_points = true;
+		var first_graph_update_round = true;
 		for (let b=0; b<TrafikkRegister[a].length; b++) {
 			
 			// Sørg over ledig margin i starten av graf.
-			if (Xcoord <= 20) {
+			var LeftMargin = 20;
+			if (Xcoord <= LeftMargin) {
 				Xcoord += GrafJS[a][0];
 				continue;
 			}
@@ -169,9 +170,11 @@ function GrafEngine() {
 			// Tegn undergrafer.
 			for (let c=0; c<GrafJS[a][7].length; c++) {
 				
-				// Første punkt skal starte fra linje.
-				if (first_graph_points)
-					GrafJS[a][7][c][2] = GrafJS[a][1].height;
+				// Første punkt skal starte fra neste NewY.
+				if (first_graph_update_round) {
+					GrafJS[a][7][c][2] = TrafikkRegister[a][b][c+1];
+					//GrafJS[a][7][c][2] = GrafJS[a][1].height;
+				}
 				
 				// Tegn linjer for INN og UT.
 				GrafJS[a][2].beginPath();
@@ -182,16 +185,24 @@ function GrafEngine() {
 				
 				// Oppdater lastY for neste runde.
 				GrafJS[a][7][c][2] = TrafikkRegister[a][b][c+1];
+				
+				// Oppdater mouseover label, trenger kun gjøre det 1 av INN/UT rundene.
+				if (c==0) {
+					var tl_label = document.getElementById('tl_label_'+ a +'-'+ b);
+					tl_label.innerHTML = TrafikkRegister[a][b][3];
+					tl_label.style.top = GrafJS[a][1].height +'px';
+					tl_label.style.left = Xcoord +'px';
+				}
 			}
-			first_graph_points = false;
+			first_graph_update_round = false;
 			
-			// Tidslinjetekst. Sørg for litt mellomrom.
-			// 5000ms intervaller og 1 minutters mellomrom = 
-			// (1*60=60)/5 = 12 ganger det skippes. 
-			if (TimeLineCounters[a] > 0 && TimeLineCounters[a] < 12) {
+			// Tidslinjetekst: Sørg for litt mellomrom.
+			// 5000ms intervaller og 1,5 minutters mellomrom 
+            // = (1,5*60=90)/5 = 18 ganger det skippes.
+			if (TimeLineCounters[a] > 0 && TimeLineCounters[a] < 18) {
 				TimeLineCounters[a] += 1;
 			} else {
-				GrafJS[a][4].fillText(TrafikkRegister[a][b][3], Xcoord+18, 2);
+				GrafJS[a][4].fillText(TrafikkRegister[a][b][3], Xcoord+28, 2);
 				TimeLineCounters[a] = 1;
 			}
 			
@@ -357,6 +368,18 @@ function HentJSONFraServer() {
 
 
 //
+// Hjelpefunksjon for mouseover/out på timeline labels.
+//
+function tl_label_hover(id,show) {
+	box = document.getElementById(id);
+	if (show)
+		box.style.opacity = '0.8';
+	else
+		box.style.opacity = '0';
+}
+
+
+//
 //  Bruker TrafikkRegister[] som fylles først, til å opprette en graf per tittel.
 //  Registrerer deretter 2 undergrafer per tittel igjen for INN- og UT trafikk.
 //
@@ -364,6 +387,16 @@ function OpprettGrafer() {
 	
 	var from_top = 0;
 	for (var n=0; n<TrafikkRegister.length; n++) {
+		
+		// Beholdere for mouseover tidspunkter på graflinjer.
+		// Standard bufrede datasett antall er 1000.
+		var timeline_stamp_labels = '';
+		for (var a=0; a<1000; a++) {
+			timeline_stamp_labels += '<span class="tl_label" id="tl_label_'+n+'-'+a+'" '+
+			                         'onmouseover="tl_label_hover(\'tl_label_'+n+'-'+a+'\',true)" '+
+									 'onmouseout="tl_label_hover(\'tl_label_'+n+'-'+a+'\',false)"'+
+			                         '></span>';
+		}
 		
 		// Visuell graf.
 		document.getElementById('Grafs').innerHTML += ''+
@@ -373,7 +406,7 @@ function OpprettGrafer() {
 		'	<div id="HWinfo">'+
 		'		<canvas id="GageBox'+ n +'" height="35px"></canvas><br>'+
 		'		<span id="GrafText'+ n +'" class="graftext">'+ TrafikkRegister[n][0][0].replace('_reverse','') +'</span>'+
-		'	</div>'+
+		'	</div>'+timeline_stamp_labels+
 		'</div>';
 		
 		// Oppdater visuell Y-plassering.

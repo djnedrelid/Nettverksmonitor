@@ -338,7 +338,7 @@ class djSNMP
 	}
 
 	//
-	// Returnerer f.eks. 17:38
+	// Returnerer f.eks. 17:38:00
 	//
 	std::string TidslinjeTekst(time_t ts)
 	{
@@ -348,7 +348,8 @@ class djSNMP
 
 		// Tid.
 		datotid.append( ((tid.tm_hour) < 10 ? "0" + std::to_string(tid.tm_hour) : std::to_string(tid.tm_hour) ) + ":");
-		datotid.append( ((tid.tm_min) < 10 ? "0" + std::to_string(tid.tm_min) : std::to_string(tid.tm_min) ));
+		datotid.append( ((tid.tm_min) < 10 ? "0" + std::to_string(tid.tm_min) : std::to_string(tid.tm_min) ) + ":");
+		datotid.append( ((tid.tm_sec) < 10 ? "0" + std::to_string(tid.tm_sec) : std::to_string(tid.tm_sec) ));
 
 		return datotid;
 	}
@@ -363,7 +364,7 @@ class djSNMP
 		for (size_t a=0; a<trafikkenheter.size(); a++) {
 			
 			// Sett et initielt tidslinjepunkt.
-			time_t forrige_tidspunkt = 0;
+			//time_t forrige_tidspunkt = 0;
 			
 			// Begynn på JSON output.
 			JSONBuffer += "\t\t{\""+ trafikkenheter.at(a).tittel +"\":";
