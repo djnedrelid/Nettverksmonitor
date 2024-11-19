@@ -187,7 +187,8 @@ function GrafEngine() {
 				GrafJS[a][7][c][2] = TrafikkRegister[a][b][c+1];
 				
 				// Oppdater mouseover label, trenger kun gjøre det 1 av INN/UT rundene.
-				if (c==0) {
+				// En hard grense er satt på 1000 bufrede datapunkter for ytelsens skyld.
+				if (c==0 && b < 1000) {
 					var tl_label = document.getElementById('tl_label_'+ a +'-'+ b);
 					tl_label.innerHTML = TrafikkRegister[a][b][3];
 					tl_label.style.top = GrafJS[a][1].height +'px';
