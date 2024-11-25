@@ -10,6 +10,30 @@
 //  i forhold til antall enheter og intervall. Server har ansvar for datasett-størrelse.
 //
 
+
+// MØRKT TEMA FARGER
+var FARGE_FARTSLINJER = '#666';
+var FARGE_FARTSTITLER = '#fff';
+var FARGE_GAUGE_BAKGRUNN = '#666';
+var FARGE_GAUGE_INN = '#0f0';
+var FARGE_GAUGE_UT = '#3cf';
+var FARGE_GAUGE_VERDI = '#fff';
+var FARGE_TIDSLINJE = '#fff';
+var FARGE_MADEBY_TEKST = '#eee';
+
+// LYST TEMA FARGER
+/*
+var FARGE_FARTSLINJER = '#ccc';
+var FARGE_FARTSTITLER = '#000';
+var FARGE_GAUGE_BAKGRUNN = '#ccc';
+var FARGE_GAUGE_INN = 'green';
+var FARGE_GAUGE_UT = 'blue';
+var FARGE_GAUGE_VERDI = '#000';
+var FARGE_TIDSLINJE = '#000';
+var FARGE_MADEBY_TEKST = '#000';
+*/
+
+// Globale Systemvariabler.
 var GrafJS = [];                  // Hovedregister.
 var TrafikkRegister = [];         // Datapunkt-register fra server.
 var OppdateringsIntervall = 5000; // JSON ms intervall fra server.
@@ -56,7 +80,7 @@ function PrepCanvases(GrafJSIndex) {
 	GrafJS[GrafJSIndex][10] = document.getElementById("GageBox"+GrafJSIndex);
 	
 	// Canvas properties and contexts.
-	var CurCanvasX = document.getElementById("Grafs").offsetWidth;
+	var CurCanvasX = document.getElementById("Grafs").offsetWidth-15; // -15 hindrer h-scrolling.
 	GrafJS[GrafJSIndex][1].width = CurCanvasX;
 	GrafJS[GrafJSIndex][3].width = CurCanvasX;
 	GrafJS[GrafJSIndex][10].width = CurCanvasX;
@@ -75,7 +99,7 @@ function PrepCanvases(GrafJSIndex) {
 	GrafJS[GrafJSIndex][2].translate(0.5,0.5);
 	GrafJS[GrafJSIndex][2].font = "11px Verdana";
 	GrafJS[GrafJSIndex][2].textBaseline = "middle";
-	GrafJS[GrafJSIndex][4].font = "12px Verdana";
+	GrafJS[GrafJSIndex][4].font = "13px Arial";
 	GrafJS[GrafJSIndex][4].textAlign = "end";
 	GrafJS[GrafJSIndex][4].textBaseline = "top";
 }
@@ -102,7 +126,8 @@ function GrafEngine() {
 		
 		// Horisontale graf-visningsverdier.
 		GrafJS[a][2].beginPath();
-		GrafJS[a][2].strokeStyle = "#ccc";
+		GrafJS[a][2].strokeStyle = FARGE_FARTSLINJER;
+		GrafJS[a][2].fillStyle = FARGE_FARTSTITLER;
 		GrafJS[a][2].lineWidth = 1;
 		
 		// 90 Mbps.
@@ -193,6 +218,11 @@ function GrafEngine() {
 					tl_label.innerHTML = TrafikkRegister[a][b][3];
 					tl_label.style.top = GrafJS[a][1].height +'px';
 					tl_label.style.left = Xcoord +'px';
+					
+					// Ikke gå utenfor synlig område.
+					// 50 = ca bredden per label.
+					if ((Xcoord + 50) >= GrafJS[a][1].width)
+						tl_label.style.left = GrafJS[a][1].width - 50 +'px';
 				}
 			}
 			first_graph_update_round = false;
@@ -203,6 +233,7 @@ function GrafEngine() {
 			if (TimeLineCounters[a] > 0 && TimeLineCounters[a] < 18) {
 				TimeLineCounters[a] += 1;
 			} else {
+				GrafJS[a][4].fillStyle = FARGE_TIDSLINJE;
 				GrafJS[a][4].fillText(TrafikkRegister[a][b][3], Xcoord+28, 2);
 				TimeLineCounters[a] = 1;
 			}
@@ -221,7 +252,7 @@ function GrafEngine() {
 					let GageColor = ((100 - TrafikkRegister[a][b][c+1]) >= 50 ? "red":"green");
 					let PercentStepValue = Math.PI/100;
 					let PercentStep = TrafikkRegister[a][b][c+1];
-					GrafJS[a][11].font = "11px Verdana";
+					GrafJS[a][11].font = "11px Arial";
 					GrafJS[a][11].lineWidth = 5;
 					
 					// Percent handling.
@@ -236,7 +267,7 @@ function GrafEngine() {
 					//BGcolor.
 					GrafJS[a][11].beginPath();
 					GrafJS[a][11].arc(GageXPos,20,15,Math.PI,(Math.PI*2));
-					GrafJS[a][11].strokeStyle = "#eee";
+					GrafJS[a][11].strokeStyle = FARGE_GAUGE_BAKGRUNN;
 					GrafJS[a][11].stroke();
 					// Front color.
 					GrafJS[a][11].beginPath();
@@ -251,7 +282,7 @@ function GrafEngine() {
 					// Value.
 					GrafJS[a][11].beginPath();
 					GrafJS[a][11].font = "10px Verdana";
-					GrafJS[a][11].fillStyle = "#000";
+					GrafJS[a][11].fillStyle = FARGE_GAUGE_VERDI;
 					GrafJS[a][11].fillText(GageVal.toFixed(), GageXPos-GageValuePos, 20);
 					GrafJS[a][11].stroke();
 					
@@ -374,7 +405,7 @@ function HentJSONFraServer() {
 function tl_label_hover(id,show) {
 	box = document.getElementById(id);
 	if (show)
-		box.style.opacity = '0.8';
+		box.style.opacity = '0.9';
 	else
 		box.style.opacity = '0';
 }
@@ -420,8 +451,8 @@ function OpprettGrafer() {
 		// GrafLoad(array(array(string Name, string Color, int LastY, int NewY)), int GrafJSIndex)
 		GrafLoad(
 			[
-				["Mbps INN","green",0,0],
-				["Mbps UT","blue",0,0]
+				["Mbps INN",FARGE_GAUGE_INN,0,0],
+				["Mbps UT",FARGE_GAUGE_UT,0,0]
 			], 
 			n
 		);
@@ -431,13 +462,13 @@ function OpprettGrafer() {
 	document.getElementById('Grafs').innerHTML += ''+
 	'<div style="'+
 		'position: absolute; '+
-		'right: 0px; '+
+		'right: 10px; '+
 		'top: '+ (from_top + 30) +'px; '+
 		'padding-bottom: 10px; '+
 		'font-family: verdana; '+
 		'font-size: 11px; '+
-		'color: #333;'+
-	'">&copy;2024 Nettverksmonitor fra <a href="https://thronic.com" target="_blank" style="text-decoration:none" title="Dag J. V. Nedrelid">ժʝ</a></div>';
+		'color: '+ FARGE_MADEBY_TEKST +';'+
+	'">&copy;2024 Nettverksmonitor fra <a href="https://thronic.com" target="_blank" style="text-decoration:none; color:'+ FARGE_MADEBY_TEKST +'" title="Dag J. V. Nedrelid">ժʝ</a></div>';
 }
 
 
